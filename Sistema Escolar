@@ -1,0 +1,359 @@
+package pkg12.pkg09.metodos;
+
+import java.awt.BorderLayout;
+import java.lang.annotation.RetentionPolicy;
+import javax.swing.JOptionPane;
+import java.lang.String;
+
+public class Metodos {
+
+    public static String N = "\n", nomeDuracao = "Bimestre";
+    public static String nome[] = new String[99];
+    public static String numeroContato[] = new String[99];
+    public static int numeroId[] = new int[99];
+    public static float mediasTrimestrais[] = new float[99];
+    public static float calculoAritmetica[] = new float[99];
+    public static int notas = 0;
+    public static float nota1[] = new float[99];
+    public static float nota2[] = new float[99];
+    public static float nota3[] = new float[99];
+    public static float mediaArit[] = new float[99];
+    public static float mediaPond[] = new float[99];
+    public static String boletim[] = new String[99];
+    public static String relatorio[] = new String[99];
+    public static String situacao[] = new String[99];
+    public static int cont = 0, qtdAlunos = 0;
+
+    public static void main(String[] args) {
+        //USAMOS A MAIN APENAS PARA DAR A SAUDACAO E PUXAR O MENU PRINCIPAL
+
+        JOptionPane.showMessageDialog(null, "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - " + N + "|                 BEM-VINDO AO SESI SENAI                       |"
+                + N + "|  Iniciando sistema de gerenciamento de notas  |" + N + "|            Seja bem-vinda professora Karize,             |" + N
+                + "|             Aperte no botão OK para prosseguir.        |" + N + "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
+        Menu();
+
+    }
+
+    public static void Menu() {
+        //MENU PRINCIPAL DO PROGRAMA
+
+        int menu = 0;
+
+        menu = Integer.parseInt(JOptionPane.showInputDialog("             - - - - - - - - - - - - - - - - - - - " + N + "             | 1 - Duracao de curso | " + N + "             | 2 - Cadastrar alunos  | " + N
+                + "             | 3 - Lista de alunos      | " + N + "             | 4  - Registrar Notas    | " + N + "             | 5 - Calcular Media       | " + N + "            - - - - - - - - - - - - - - - - - - - "));
+        
+        switch (menu) {
+            case 1 ->
+                duracaoCurso();
+            case 2 ->
+                cadastrodeAlunos();
+            case 3 ->
+                listaAlunos();
+            case 4 ->
+                registroDeNotas();
+            case 5 ->
+                calculoMedia();
+
+            default ->
+                System.out.println(" Erro");
+
+        }
+    }
+    
+    public static void mostrarDisciplinas() {
+        System.out.println("DISCIPLINAS TURMA NOTURNA SESI SENAI" + N + "Curso: Analise e desenvolvimento de sistemas" + N + "Professor(a): Angelica Karize" + "Carga Horária: 30 horas");
+        System.out.println(N + "Curso: Banco de Dados" + N + "Professor(a): Vitor Hugo" + N +"Carga Horária: 30 horas");
+        System.out.println(N + "Curso: Introducao a Desenvolvimento de projetos" + N + "Professor(a): Angelica Karize" + N + "Carga Horária: 15 horas");
+        System.out.println(N + "Curso: Industria 4.0" + N + "Professor(a): Diego de Carvalho" + N + "Carga Horária: 15 horas");
+    }
+    public static void cadastrodeAlunos() {
+        //FUNCAO PARA REGISTRAR OS ALUNOS DA TURMA
+        String resposta = "";
+        //PERGUNTA PARA TER CONTROLE DA QUANTIDADE DE ALUNOS
+        do {
+            qtdAlunos = Integer.parseInt(JOptionPane.showInputDialog("Informe quantos alunos serao cadastrados: "));
+            //RREGISTRO DE DADOS DOS ALUNOS
+            for (int i = 0; i < qtdAlunos; i++) {
+                cont++;
+                nome[i] = JOptionPane.showInputDialog("Informe o nome do estudante: " + N + "- - Chamada {" + cont + "} - -");
+                numeroContato[i] = JOptionPane.showInputDialog("- - Chamada {" + cont + "} - -" + N + "Informe um número de contato: +55");
+                numeroId[i] = cont;
+                relatorio[i] = N + "Aluno: " + nome[i] + N + "Id: " + numeroId[i] + N + "Numero de contato: +55 " + numeroContato[i] + N + "- - - - - - - - -";
+            }
+            
+            for (int f = 0; f < qtdAlunos; f++) {
+                System.out.println(relatorio[f]);
+            }
+            //PERGUNTA PARA LACO DE REPETICAO
+            resposta = JOptionPane.showInputDialog("Deseja cadastrar mais alunos? (S/N)").toUpperCase();
+        } while (resposta.equals("S"));
+        Menu();
+    }
+
+    public static void listaAlunos() {
+        //FUNCAO CRIADA PARA REALIZAR A IMPRESSAO DE UMA LISTA DE CHAMADA DOS ALUNOS REGISTRADOS
+        int numeracao = 1;
+        //LISTA DE ALUNOS
+        System.out.println("CHAMADA TURMA NOTURNA SESI SENAI" + N + "Curso: Analise e desenvolvimento de sistemas" + N + "Professores: Angelica Karize");
+        for (int i = 0; i < cont; i++) {
+            System.out.println(numeracao + " - " + nome[i]);
+            numeracao++;
+        }
+        Menu();
+    }
+
+    public static void registroDeNotas() {
+        //FUNCAO PARA CRIAR E ARMAZENAR AS NOTAS DE UM TRIMESTRE, BIMESTRE OU SEMESTRE
+
+        String resposta = "";
+        String disciplinas[] = new String[99];
+        float Nota1 = 0f, Nota2 = 0f, Nota3 = 0f;
+        int periodo = 1, aluno = 0;
+
+        do {
+            aluno = Integer.parseInt(JOptionPane.showInputDialog("Escolha um aluno pelo console e digite seu ID:"));
+            aluno -= 1;
+
+            for (int i = 0; i < notas; i++) {
+                //ESCOLHA MATERIA
+                Object[] disciplinasJanela = {"Programacao de aplicativos", "Banco de dados", "Industria 4.0", "Introducao a Desenvolvimento de projetos"};
+                Object disciplinasLista = JOptionPane.showInputDialog(null, "Escolha uma Disciplina" + N + nomeDuracao + " { " + periodo + " }" + N + "Aluno: " + nome[aluno], "Disciplinas",
+                        JOptionPane.INFORMATION_MESSAGE, null, disciplinasJanela, disciplinasJanela[0]);
+                String opcaoEscolha = (String) disciplinasLista;
+                disciplinas[i] = opcaoEscolha;
+                //REGISTRO DAS NOTAS DE UM PERIODO
+                Nota1 = Integer.parseInt(JOptionPane.showInputDialog("Informe a nota da prova: "));
+                Nota2 = Integer.parseInt(JOptionPane.showInputDialog("Informe a nota do trabalho: "));
+                Nota3 = Integer.parseInt(JOptionPane.showInputDialog("Informe a nota de participação: "));
+                //TRANSFORMACAO NOTAS PARA OS VETORES
+                nota1[i] = Nota1;
+                nota2[i] = Nota2;
+                nota3[i] = Nota3;
+                //ARMAZENAMENTO VETOR BOLETIM
+                boletim[i] = (N + "{ " + periodo + " - " + nomeDuracao + " }" + N + "Disciplina: " + disciplinas[i] + N + "Nota 1 - - - Nota 2 - - - Nota 3" + N
+                        + "- " + nota1[i] + "   - - -  " + nota2[i] + "   - - -  " + nota3[i]);
+                
+                periodo++;
+            }
+            resposta = JOptionPane.showInputDialog("Desejas informar mais notas (S/N)").toUpperCase();
+        } while (resposta.equals("S"));
+        Menu();
+    }
+
+    public static void duracaoCurso() {
+        //FUNCAO PARA DECIDIR QUAL FORMATO O CURSO SERA REALIZADO
+        int resposta = 0;
+        int calculo = 0;
+        
+        //PERGUNTA QUAL FORMATO DO CURSO - VALIDACAO A PARTIR DA QUANTIDADE DE NOTAS ANUAIS
+        do {
+            resposta = Integer.parseInt(JOptionPane.showInputDialog("Escolha o tempo de curso:" + N
+                    + "1 - Bimestre" + N + "2 - Trimestre" + N + "3 - Semestre"));
+
+            if (resposta == 1) {
+                notas = 4;
+            } else if (resposta == 2) {
+                notas = 3;
+                nomeDuracao = "Trimestre";
+            } else if (resposta == 3) {
+                notas = 2;
+                nomeDuracao = "Semestre";
+            } else {
+                System.out.println("Numero incorreto");
+            }
+        } while ((resposta > 3) || (resposta < 1));
+        Menu();
+    }
+
+    public static void calculoMedia() {
+        //FUNCAO RESPONSAVEL PELO MENU DE MEDIA
+
+        do {
+            if (notas == 4) {
+                calculoBimestre();
+            } else if (notas == 3) {
+                calculoTrimestre();
+            } else if (notas == 2) {
+                calculoSemestre();
+            } else {
+                System.out.println("Numero incorreto");
+            }
+        } while ((notas > 4) || (notas < 1));
+        Menu();
+    }
+
+    public static void calculoBimestre() {
+        //FUNCAO PARA REALIZAR CALCULO PONDERADA E ARITMETICA EM RELACAO A BIMESTRE
+        //FUNCAO TAMBEM REALIZA O ARMAZENAMENTO DAS INFORMACOES BIMESTRAIS PARA IMPRESSAO DO BOLETIM
+
+        float calculo = 0;
+        float calculoMediaPonderada = 0f;
+        float calculoMediaAritmetica = 0f;
+        float j = 0f, h = 0f;
+        float mediaFinal[] = new float[99];
+        
+        //CALCULO MEDIAS BIMESTRAIS
+        for (int k = 0; k < notas; k++) {
+            h = ((nota1[k] + nota2[k] + nota3[k]) / 3f);
+            mediasTrimestrais[k] = h;
+        }
+
+        calculo = Integer.parseInt(JOptionPane.showInputDialog("Qual caluclo de media iremos realizar:" + N + "1 - Ponderada"
+                + N + "2 - Aritmetica"));
+        //CALCULO MEDIAS PONDERADAS
+        if (calculo == 1) {
+             for (int n = 0; n < 4; n++) {
+                mediaPond[n] = (mediasTrimestrais[0] * 0.25f) + (mediasTrimestrais[1] * 0.25f) + (mediasTrimestrais[2] * 0.25f) + (mediasTrimestrais[3] * 0.25f);
+                mediaFinal[n] = mediaPond[n];
+            }
+        } 
+        //CALCULO MEDIAS ARTIMETICAS
+        else if (calculo == 2) {
+            for (int n = 0; n < 4; n++) {
+                mediaArit[n] = (mediasTrimestrais[0] + mediasTrimestrais[1] + mediasTrimestrais[2] + mediasTrimestrais[3]) / 4f;
+                mediaFinal[n] = mediaArit[n];
+            }
+        } else {
+            System.out.println("Metodo incorreto!");
+        }    
+        //PREPARACAO DE RELATORIO + BOLETIM
+         for (int x = 0; x < qtdAlunos; x++) {
+            for (int i = 0; i < 4; i++) {
+                if (i == 0) {
+                    System.out.println(relatorio[i]);
+                }
+                System.out.println(boletim[i] + N);
+            }
+            //VALIDACAO SITUACAO DE APRENDIZAGEM
+            for (int i = 0; i < qtdAlunos; i++) {
+                if (mediaFinal[x] < 5) {
+                    situacao[i] = "Reprovado";
+                } else if (mediaFinal[x] > 7) {
+                    situacao[i] = "Aprovado";
+                } else {
+                    situacao[i] = "Exame";
+                }
+            }
+            //IMPRESSAO
+            System.out.println("- - - - - - - - - " + N + "Media final - " + mediaFinal[x] + N + "- - - - - - - - - " + N + situacao[x]);
+        }
+        Menu();
+    }
+
+    public static void calculoTrimestre() {
+        //FUNCAO PARA REALIZAR CALCULO PONDERADA E ARITMETICA EM RELACAO A TRIMESTRE
+        //FUNCAO TAMBEM REALIZA O ARMAZENAMENTO DAS INFORMACOES TRIMESTRAIS PARA IMPRESSAO DO BOLETIM
+
+        float calculo = 0;
+        float calculoMediaPonderada = 0f;
+        float calculoMediaAritmetica = 0f;
+        float mediaFinal[] = new float[99];
+        float j = 0f, h = 0f, Media1 = 0f;
+        int escolhaAluno = 0;
+        
+        //CALCULO MEDIAS TRIMESTRAIS
+        for (int k = 0; k < notas; k++) {
+            h = ((nota1[k] + nota2[k] + nota3[k]) / 3f);
+            mediasTrimestrais[k] = h;
+        }
+
+        calculo = Integer.parseInt(JOptionPane.showInputDialog("Qual calculo de media iremos realizar:" + N + "1 - Ponderada"
+                + N + "2 - Aritmetica"));
+        //CALCULO MEDIAS PONDERADAS
+        if (calculo == 1) {
+            for (int n = 0; n < 3; n++) {
+                mediaPond[n] = (mediasTrimestrais[0] * 0.33f) + (mediasTrimestrais[1] * 0.33f) + (mediasTrimestrais[2] * 0.33f);
+                mediaFinal[n] = mediaPond[n];
+            }
+        } 
+        //CALCULO MEDIAS ARITMETICAS
+        else if (calculo == 2) {
+            for (int n = 0; n < 3; n++) {
+                mediaArit[n] = (mediasTrimestrais[0] + mediasTrimestrais[1] + mediasTrimestrais[2]) / 3f;
+                mediaFinal[n] = mediaArit[n];
+            }
+        } else {
+            System.out.println("Metodo incorreto!");
+        }
+        //PREPARACAO DE RELATORIO + BOLETIM
+        for (int x = 0; x < qtdAlunos; x++) {
+            for (int i = 0; i < 3; i++) {
+                if (i == 0) {
+                    System.out.println(relatorio[i]);
+                }
+                System.out.println(boletim[i] + N);
+            }
+            //VALIDACAO SITUACAO DE APRENDIZAGEM
+            for (int i = 0; i < qtdAlunos; i++) {
+                if (mediaFinal[x] < 5) {
+                    situacao[i] = "Reprovado";
+                } else if (mediaFinal[x] > 7) {
+                    situacao[i] = "Aprovado";
+                } else {
+                    situacao[i] = "Exame";
+                }
+            }
+            //IMPRESSAO
+            System.out.println("- - - - - - - - - " + N + "Media final - " + mediaFinal[x] + N + "- - - - - - - - - " + N + situacao[x]);
+        }
+        Menu();
+    }
+
+    public static void calculoSemestre() {
+        //FUNCAO PARA REALIZAR CALCULO PONDERADA E ARITMETICA EM RELACAO A SEMESTRE
+        //FUNCAO TAMBEM REALIZA O ARMAZENAMENTO DAS INFORMACOES SEMESTRAIS PARA IMPRESSAO DO BOLETIM
+
+        float calculo = 0;
+        float calculoMediaPonderada = 0f;
+        float calculoMediaAritmetica = 0f;
+        float mediaFinal[] = new float[99];
+        float j = 0f, h = 0f;
+        int escolhaAluno = 0;
+        
+        //CALCULO MEDIAS SEMESTRAIS
+        for (int k = 0; k < notas; k++) {
+            h = ((nota1[k] + nota2[k] + nota3[k]) / 3f);
+            mediasTrimestrais[k] = h;
+        }
+        
+        calculo = Integer.parseInt(JOptionPane.showInputDialog("Qual calculo de media iremos realizar:" + N + "1 - Ponderada"
+                + N + "2 - Aritmetica"));
+        //CALCULO MEDIAS PONDERADAS
+        if (calculo == 1) {
+            for (int n = 0; n < 2; n++) {
+                mediaPond[n] = (mediasTrimestrais[0] * 0.5f ) + (mediasTrimestrais[1] * 0.5f);  
+                mediaFinal[n] = mediaPond[n];
+            }
+        } //CALCULO MEDIAS ARITMETICAS
+        else if (calculo == 2) {
+            for (int n = 0; n < 2; n++) {
+                mediaArit[n] = (mediasTrimestrais[0] + mediasTrimestrais[1]) / 2f;
+                mediaFinal[n] = mediaArit[n];
+            }
+        } else {
+            System.out.println("Metodo incorreto!");
+        }
+        //PREPARACAO DE RELATORIO + BOLETIM
+        for (int x = 0; x < qtdAlunos; x++) {
+            for (int i = 0; i < notas; i++) {
+                if (i == 0) {
+                    System.out.println(relatorio[i]);
+                }
+                System.out.println(boletim[i] + N);
+            }
+            //VALIDACAO SITUACAO DE APRENDIZAGEM
+            for (int i = 0; i < qtdAlunos; i++) {
+                if (mediaFinal[x] < 5) {
+                    situacao[i] = "Reprovado";
+                } else if (mediaFinal[x] > 7) {
+                    situacao[i] = "Aprovado";
+                } else {
+                    situacao[i] = "Exame";
+                }
+            }
+            //IMPRESSAO
+            System.out.println("- - - - - - - - - " + N + "Media final - " + mediaFinal[x] + N + "- - - - - - - - - " + situacao[x]);
+        }
+        Menu();
+    }
+}
