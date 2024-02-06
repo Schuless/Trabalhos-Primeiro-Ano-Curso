@@ -1,0 +1,406 @@
+programa
+{	
+	inclua biblioteca Matematica --> mat
+	inclua biblioteca Texto --> txt
+	
+	// VARIAVEIS - -
+	cadeia produtos[9999], classificacoes[9999]
+	inteiro estoque[9999]
+	inteiro qntdProdutos = 0, validacaoLogin = 1
+
+	// CONSTANTES - -
+	cadeia n = "\n", espaco = " - - - - "
+	
+	// VARIAVEIS PARA INOVAÇÃO - -
+	real valor[9999]
+	cadeia pedidosTotais[9999]
+	real valorTotal = 0.0
+	inteiro compras = 0
+	
+	funcao inicio()
+	{
+		inteiro opcao
+		
+		Login()
+		
+		se(validacaoLogin != 0){
+			limpa()
+			
+			faca{
+	
+				imprimirMenu()
+				leia(opcao)
+	
+				escolha(opcao){
+					caso 1:
+						inserirProdutos()
+				 		pare
+					caso 2:
+						atualizarProdutos()
+						pare
+					caso 3:
+						excluirProdutos()
+					 	pare
+					 caso 4:
+						exibirProdutos("C")
+						pare
+					caso 5:
+						exibirPorOrdem()
+					 	pare
+					caso 6:
+						exibirPorClassificacao()
+					 	pare
+					caso 7:
+						adicionarEstoque()
+					 	pare
+					caso 8:
+						removerEstoque()
+					 	pare
+					 caso 9:
+					 	painelCompra() 
+					 	pare	
+					caso 0:
+						escreva(n + "Programa encerrado!")
+						pare	 
+				}
+			}enquanto(opcao != 0)
+		}
+	}
+
+	funcao Login() {
+	
+		cadeia loginUsuario = "adm", senhaUsuario = "adm"
+		cadeia loginUsuarioR = "", senhaUsuarioR = ""
+
+		escreva ("Informe seu usuario: ")
+		leia (loginUsuarioR)
+		escreva ("Informe sua senha: ")
+		leia (senhaUsuarioR)
+		
+		se ((loginUsuarioR != loginUsuario) ou (senhaUsuarioR != senhaUsuario)) {
+			escreva (n + "Login/senha Inválido!" + n + n)
+			validacaoLogin = 0
+		}
+	}
+	
+	funcao imprimirMenu(){
+		escreva("\n--------------MENU--------------" + n)
+		escreva(" Opção 1: Inserir produto." + n)
+		escreva(" Opção 2: Atulizar produtos." + n)
+		escreva(" Opção 3: Excluir produto." + n)
+		escreva(" Opção 4: Exibir produtos." + n)
+		escreva(" Opção 5: Imprimir ordem." + n)
+		escreva(" Opção 6: Imprimir classificação." + n)
+		escreva(" Opção 7: Adicionar estoque." + n)
+		escreva(" Opção 8: Remover estoque." + n)
+		escreva(" Opção 9: Painel de compras." + n + n)
+		escreva(" Opção 0: Encerrar programa." + n + "-")
+	}
+
+	funcao inserirProdutos(){
+		
+		cadeia nomeDoProduto = "", classificacaoDoProduto = ""
+
+		faca{
+			escreva("\nInforme o nome do produto: ")
+			leia(nomeDoProduto)
+			se (nomeDoProduto == ""){
+				escreva("Nome do produto inválido!" + n)
+			}				
+		} enquanto(nomeDoProduto == "")
+
+		faca{
+			escreva("\nInforme a classificação do produto: " + n)
+			escreva(" A - Primeira linha"+ n +
+				" B - Linha regular"+ n +
+				" C - Segunda linha" + n + "-")
+			leia(classificacaoDoProduto)
+
+			classificacaoDoProduto = txt.caixa_alta(classificacaoDoProduto)
+			
+			se (classificacaoDoProduto != "A" e classificacaoDoProduto != "B" e classificacaoDoProduto != "C"){
+				escreva(n + "Classificação do produto inválido!" + n)
+			}				
+		} enquanto(classificacaoDoProduto != "A" e classificacaoDoProduto != "B" e classificacaoDoProduto != "C")
+		
+		produtos[qntdProdutos] = nomeDoProduto
+		classificacoes[qntdProdutos] = classificacaoDoProduto
+		
+		qntdProdutos ++
+	}
+
+	funcao atualizarProdutos(){
+		
+		inteiro indice = 0
+		cadeia novoProduto = ""
+
+		escreva(n + "Informe o indice que deseja alterar: ")
+		leia(indice)
+
+		se(produtos[indice] == ""){
+			escreva(n + "Indice invalido!" + n)
+		}senao{
+			faca{
+				escreva(n + "Informe qual o novo produto [" + indice + "] : ")
+				leia(novoProduto)
+			
+				se(novoProduto == ""){
+					escreva(n + "--Informe um produto valido--" + n)
+				}
+			}enquanto(novoProduto == "")
+				
+			escreva(n + "--Dados atualizados!--" + n + n)
+				
+			produtos[indice] = novoProduto
+		}
+	}
+
+	funcao excluirProdutos(){
+		
+		inteiro indice = 0
+
+		escreva(n + "Informe o indice que deseja excluir: ")
+		leia(indice)
+		
+		escreva(n)
+
+		se(produtos[indice] == ""){
+			escreva("Indice invalido!" + n)
+		}senao{
+			escreva("Indice excluido!" + n)
+			
+			produtos[indice] = ""
+			classificacoes[indice] = ""
+			estoque[indice] = 0
+			valor[indice] = 0.0
+		}
+	}
+
+	funcao exibirProdutos(cadeia ordem){
+		escreva(n)
+		
+		se (ordem == "D"){
+			para (inteiro i = qntdProdutos; i >= 0; i--){
+				se (produtos[i] != ""){
+					escreva ("Indice { " + i + " }" + n + "Produto: " + produtos[i] + " - - - Classificação: " + classificacoes[i] + n + "Estoque disponível: " + estoque[i] + 
+		espaco + "Valor: R$ " + mat.arredondar(valor[i], 2 ) + n + n)
+				}
+			}
+		} senao se (ordem == "C"){
+			para (inteiro i = 0; i < qntdProdutos; i++){
+				se (produtos[i] != ""){
+					escreva ("Indice { " + i + " }" + n + "Produto: " + produtos[i] + " - - - Classificação: " + classificacoes[i] + n + "Estoque disponível: " + estoque[i] + 
+		espaco + "Valor: R$ " + mat.arredondar(valor[i], 2 ) + n + n)
+				}
+			}
+		} senao{
+			escreva("Valor incorreto! Selecione D ou C" + n)
+		}
+	}
+
+	funcao exibirPorOrdem(){
+		cadeia ordem = ""
+		
+		escreva("\nInforme a ordem " + n + " D - Decrescente " + n + " C - Crescente: " + n + "-")
+		leia(ordem)
+		escreva(n)
+
+		ordem = txt.caixa_alta(ordem)
+
+		exibirProdutos(ordem)
+	}
+
+	funcao exibirPorClassificacao(){
+		
+		cadeia classImprimir = ""
+		
+		escreva("Deseja imprimir os produtos de qual classificação?" + n +
+			" A - Primeira linha" + n +
+			" B - Regular"+ n +
+			" C - Segunda linha" + n +"-")
+		leia(classImprimir)
+		escreva("\n")
+
+		classImprimir = txt.caixa_alta(classImprimir)
+
+		se(classImprimir != "A" e classImprimir != "B" e classImprimir != "C"){
+			escreva("Classificação invalida!")
+		}senao{
+			para(inteiro i=0; i < qntdProdutos; i++){
+				se (classificacoes[i] == classImprimir){
+					escreva ("Indice { " + i + " }" + n + "Produto: " + produtos[i] + " - - - Classificação: " + classificacoes[i] + n + "Estoque disponível: " + estoque[i] + 
+					espaco + "Valor: R$ " + mat.arredondar(valor[i], 2 ) + n + n)
+				}
+			}
+		}
+	}
+
+	funcao adicionarEstoque(){
+		
+		inteiro somarEstoque = 0, indice = 0
+
+		escreva(n + "Deseja adicionar ao estoque de qual indice: ")
+		leia(indice)
+
+		se(produtos[indice] == ""){
+			escreva("Indice invalido!" + n)
+		}senao{
+			faca{
+				escreva("Quantidade a ser adicionada ao indice [" + indice + "]: ")
+				leia(somarEstoque)
+				
+				se(somarEstoque <= 0){
+					escreva(n +"Quantidade invalida!" + n + n)
+				}
+			}enquanto(somarEstoque <= 0)
+		
+			estoque[indice] += somarEstoque
+		}
+	}
+
+	funcao removerEstoque(){
+		inteiro diminuirEstoque = 0, indice = 0
+
+		escreva(n + "Deseja remover do estoque de qual indice: ")
+		leia(indice)
+
+		se(produtos[indice] == ""){
+			escreva("Indice invalido!" + n)
+		}senao{
+			faca{
+				escreva("Quantidade a ser removida do indice [" + indice + "]")
+				leia(diminuirEstoque)
+
+				se(diminuirEstoque <= 0 ou diminuirEstoque > estoque[indice]){
+					escreva(n +"Quantidade invalida!" + n + n)
+				}
+			}enquanto(diminuirEstoque <= 0 ou diminuirEstoque > estoque[indice])
+			
+			estoque[indice] -= diminuirEstoque
+		}
+	}
+
+	funcao painelCompra() {
+		
+		inteiro escolhaCompra
+		
+		escreva(n + espaco + "Bem-Vindo ao painel de compras" + espaco + n +
+		"1 - Atualizar Valor" + n +
+		"2 - Aplicar desconto a produto" + n +
+		"3 - Realizar Compra" + n +
+		"4 - Histórico de Compras" + n + n + 
+		"0 - Voltar ao Menu Principal" + n)
+		leia(escolhaCompra)
+		
+		escolha(escolhaCompra){
+			 caso 1:
+			 	atualizarPreco()
+			 	pare
+			 caso 2:
+			 	desconto()
+			 	pare
+			 caso 3:
+				compra()
+			 	pare
+			 caso 4:
+				 historicoDeCompras()
+				 pare
+				 	
+			caso 0:
+				 pare	 	
+		}
+	}
+	
+	funcao atualizarPreco() {
+		
+		real valorProduto
+		inteiro indice
+				
+		escreva(n + "Informe o indice desejado: ")
+		leia(indice)
+	
+		se (produtos[indice] == "") {
+			escreva (n + "Indice informado incorreto!" + n + n)
+		}senao{
+			escreva ("Indice { " + indice + " }" + n + "Produto: " + produtos[indice] + " - - - Classificação: " + classificacoes[indice] + n + "Estoque disponível: " + estoque[indice] + 
+			espaco + "Valor: R$ " + mat.arredondar(valor[indice], 2 ) + n + n)
+			
+			faca{
+				escreva("Informe o preço do produto: ")
+				leia(valorProduto)
+				
+				se (valorProduto <= 0){
+					
+					escreva("Preço de produto inválido!" + n)
+				} 				
+			} enquanto(valorProduto <= 0)
+	
+			valor[indice] = valorProduto
+		}
+	}
+
+	funcao desconto() {
+		
+		real preco
+		inteiro indice
+
+		escreva(n + "Informe o indice desejado: ")
+		leia(indice)
+		
+		se (produtos[indice] == "") {
+			escreva (n + "Indice informado incorreto!" + n + n)
+		}senao{				
+			faca{
+				escreva(n + "Informe o valor de desconto que deseja aplicar: %")
+				leia(preco)
+				se ((preco <= 0) ou (preco >= 100)) {
+					escreva (n + "Valor de desconto inválido!" + n + n)
+				}
+			} enquanto (preco <= 0)
+			
+			valor[indice] -= (valor[indice] / 100) * preco
+		}
+	}
+
+	funcao compra() {
+		
+		inteiro indice
+		inteiro quantiaComprada
+
+		escreva(n + "Informe o indice desejado: ")
+		leia(indice)
+		
+		se (produtos[indice] == "") {
+			escreva (n + "Indice informado incorreto!" + n + n)
+		} senao{
+			escreva ("Indice { " + indice + " }" + n + "Produto: "+produtos[indice]+" - - - Classificação: "+classificacoes[indice] + n + "Estoque disponível: "+estoque[indice] +
+			espaco + "Valor: R$ "+mat.arredondar(valor[indice], 2 ) + n + n)
+			
+			escreva ("Quanto deseja comprar? ")
+			leia (quantiaComprada)
+				
+			se ((quantiaComprada > estoque[indice]) ou (quantiaComprada <= 0)) {
+				escreva (n +"Estoque indisponivel" + n + n)
+				pedidosTotais[compras] = ("Nenhuma compra Realizada!" + n)	
+			} senao {
+				valorTotal = valor[indice] * quantiaComprada
+				estoque[indice] -= quantiaComprada
+				compras ++
+				escreva (n + espaco + "COMPRA BEM SUCEDIDA" + espaco + n)
+				pedidosTotais[compras] = ("Indice { " + indice + " }" + n + "Produto:  "+ produtos[indice] + " - - - Valor: R$ " + mat.arredondar(valor[indice], 2 )+ n + "Quantidade: " + quantiaComprada + n + "Valor total: R$ " + mat.arredondar(valorTotal, 2 ) + n + n)
+				escreva (pedidosTotais[compras])
+			}
+		}	
+	}
+
+	funcao historicoDeCompras() {
+		
+		escreva (n + espaco +"Compras Realizadas" + espaco + n)
+		se(compras == 0){
+			escreva (n + "Nenhuma compra foi realizada!" + n + n)
+		}
+		para (inteiro i = 0; i <= compras; i++) {
+			escreva (pedidosTotais[i])
+		}	
+	}
+}
