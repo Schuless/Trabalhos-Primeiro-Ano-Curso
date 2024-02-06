@@ -1,0 +1,55 @@
+package prova_14_08_23;
+
+import javax.swing.JOptionPane;
+
+public class Prova_14_08_23_Exercicio2 {
+    
+    public static void main(String[] args) {
+        
+        float media[] = new float[999];
+        float nota1 = 0f, nota2 = 0f, nota3 = 0f, medias = 0f;
+        String boletim[] = new String[999];
+        String nome[] = new String[999];
+        String situacao[] = new String[999];
+        int contador = 0, resposta = 1, resposta2 = 2;
+        
+        do { do {
+            contador += 1;
+            String Nome = JOptionPane.showInputDialog("Informe o nome do aluno:");
+            nome[contador] = Nome;
+ 
+                String Nota1 = JOptionPane.showInputDialog("Informe a nota {1} do aluno: " + nome[contador]);
+                nota1 = Float.parseFloat(Nota1);
+                String Nota2 = JOptionPane.showInputDialog("Informe a nota {2} do aluno: " + nome[contador]);
+                nota2 = Float.parseFloat(Nota2);
+                String Nota3 = JOptionPane.showInputDialog("Informe a nota {3} do aluno: " + nome[contador]);
+                nota3 = Float.parseFloat(Nota3);
+            
+            medias = (nota1+nota2+nota3)/3;
+            media[contador] = medias;
+            
+            if (media[contador] >= 7f){
+                situacao[contador] = "Aprovado";
+            } else if ((media[contador] < 7f) && (media[contador] > 6f)){
+                situacao[contador] = "Exame";
+            } else if (media[contador] < 6f){
+                situacao[contador] = "Reprovado";
+            }
+            
+            boletim[contador] = ("BOLETIM ESCOLAR\nEscola: Sesi Senai Blumenau\nAluno: " + nome[contador] + "\nMedia: " + media[contador] + "\nSituacao de aprendizagem: " + situacao[contador]);
+                    
+            String Resposta = JOptionPane.showInputDialog("Deseja informar mais alunos?\n1 - Sim\n2 - Nao");
+            resposta = Integer.parseInt(Resposta);
+            
+        }while (resposta == 1);
+        
+        for (int i = 1; i <= contador; i++) {
+            JOptionPane.showMessageDialog(null,boletim[i]);
+            
+        }
+        
+        String Resposta2 = JOptionPane.showInputDialog("Deseja encerrar o programa?\n1 - Sim\n2 - Nao, adicionar mais alunos");
+        resposta2 = Integer.parseInt(Resposta2);
+        } while (resposta2 == 2);
+    }
+}
