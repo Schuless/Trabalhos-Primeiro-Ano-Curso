@@ -1,0 +1,101 @@
+package pessoa;
+
+import javax.swing.JOptionPane;
+
+public class Pessoa {
+
+    //Atributos relacionados a pessoa
+    String nomePessoa;
+    int idadePessoa;
+    boolean saudePessoa;
+    String status = "";
+
+    //Construtores
+    //PRIMEIRO CONSTRUTOR SEMPRE SERÃ? O DEFAULT
+    Pessoa() {
+
+    }
+
+    //construtor 1
+    Pessoa(String nomeDaPessoa, int idadeDaPessoa) {
+        this.nomePessoa = nomeDaPessoa;
+        this.idadePessoa = idadeDaPessoa;
+    }
+
+    //construtor 2
+    Pessoa(boolean vivoOuMorto) {
+        this.saudePessoa = vivoOuMorto;
+    }
+
+    //construtor 3
+    Pessoa(boolean vivoMorto, int idadeDoIndividuo) {
+        this.saudePessoa = vivoMorto;
+        this.idadePessoa = idadeDoIndividuo;
+    }
+
+    Pessoa(boolean SaudeDoIndividuo, String Nome, int Idade) {
+        this.saudePessoa = SaudeDoIndividuo;
+        this.nomePessoa = Nome;
+        this.idadePessoa = Idade;
+    }
+
+    public static void main(String[] args) {
+
+        //objeto 1
+        Pessoa ind1 = new Pessoa();
+
+        ind1.nomePessoa = "Henrique";
+        ind1.idadePessoa = 20;
+        ind1.saudePessoa = true;
+        ind1.toPrint();
+
+        //objeto 2
+        Pessoa ind2 = new Pessoa(true);
+
+        //objeto 3
+        Pessoa ind3 = new Pessoa("Suyanne", 23);
+
+        //objeto 4
+        Pessoa ind4 = new Pessoa(false, 90);
+
+        Pessoa ind5 = new Pessoa(true, "Kauane", 17);
+    }
+
+    public void declararStatus(boolean statusVida) {
+
+        this.saudePessoa = statusVida;
+
+        JOptionPane.showMessageDialog(null, this.nomePessoa + " se encontra " + status);
+    }
+
+    public void cadastrarPessoa(String nomeUsuario, int idadeUsuario) {
+        this.nomePessoa = nomeUsuario;
+        this.idadePessoa = idadeUsuario;
+        JOptionPane.showMessageDialog(null, "Nome: " + this.nomePessoa + "\nIdade: " + this.idadePessoa + " anos");
+    }
+
+    public String realizarProvaDeVida(String nome, int idade, boolean estaVivo) {
+        this.saudePessoa = estaVivo;
+        this.nomePessoa = nome;
+        this.idadePessoa = idade;
+
+        if (saudePessoa = true) {
+            status = "vivo";
+        } else {
+            status = "morto";
+        }
+
+        return  "Nome: " + this.nomePessoa + ""
+                + "\nPossui " + this.idadePessoa + " anos\n"
+                + "\nSe encontra " + status;
+    }
+    
+    public void toPrint() {
+        JOptionPane.showMessageDialog(null, "Nome: " + this.nomePessoa + ""
+                + "\nPossui " + this.idadePessoa + " anos\n"
+                + "\nSe encontra" + status);
+    }
+}
+
+//CLASSE ANIMAL
+
