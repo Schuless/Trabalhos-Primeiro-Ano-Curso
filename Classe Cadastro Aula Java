@@ -1,0 +1,12 @@
+package cadastro;
+
+import javax.swing.JOptionPane;
+
+public class Cadastro {
+
+    public static void main(String[] args) {
+        MetodosCadastro cad = new MetodosCadastro();
+               cad.cadastroProduto();
+               cad.listarProdutos();
+    }
+}
