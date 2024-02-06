@@ -1,0 +1,40 @@
+package prova_14_08_23;
+
+import java.text.DecimalFormat;
+import javax.swing.JOptionPane;
+
+public class Prova_14_08_23_Exercicio1 {
+
+    public static void main(String[] args) {
+        
+        int horas = 0, resposta = 0;
+        float salario = 0f, hora = 0f;
+        DecimalFormat df;
+        do {
+        
+        do {
+            
+            String Horas = JOptionPane.showInputDialog("Informe a quantidade de horas trabalhadas nesse mês:");
+            horas = Integer.parseInt(Horas);
+            if ((horas <= 0) || (horas >= 720)) {
+                 JOptionPane.showMessageDialog(null, "Informe uma quantidade maior do que zero ou menor do que 720");
+            }   
+        } while ((horas <= 0) || (horas >= 720));
+           
+        do {
+            String Salario = JOptionPane.showInputDialog("Informe seu salário:");
+            salario = Integer.parseInt(Salario);
+            if (salario <= 0 ) {
+                JOptionPane.showMessageDialog(null, "Informe uma quantidade maior do que zero");
+            }
+        } while (salario <= 0 );
+        
+        hora = (salario/horas);
+        
+        JOptionPane.showMessageDialog(null, "Seu salario hora atual é de R$ " + hora);
+        String Resposta = JOptionPane.showInputDialog("Deseja sair do programa? \n1 - Sim\n2 - Nao");
+        resposta = Integer.parseInt(Resposta);
+        } while (resposta == 2);
+    }
+    
+}
