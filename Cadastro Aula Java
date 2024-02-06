@@ -1,0 +1,137 @@
+package cadastro;
+
+import javax.swing.JOptionPane;
+
+public class Cadastro {
+
+    int cont = 0, op, acao;
+    String[] produto = new String[999];
+    String pular = "\n";
+
+    //função / metodo ImprimeMenu
+    int ImprimeMenu() {
+        Integer op = Integer.parseInt(JOptionPane.showInputDialog(pular + pular + "***** MENU *****   "
+                + pular + "1 - Inserir        "
+                + pular + "2 - Atualizar      "
+                + pular + "3 - Excluir        "
+                + pular + "4 - Exibir         "
+                + pular + "5 - ImprimirOrdem  "
+                + pular + "9 - Encerrar 	   "
+                + pular));
+        return op;
+    }
+//função / metodo Inserir
+
+    void Inserir() {
+        String nomeProduto = "";
+        do {
+            nomeProduto = JOptionPane.showInputDialog("Informe o nome do produto: ");
+            if (nomeProduto == "") {
+                JOptionPane.showMessageDialog(null, "Nome do produto inválido!" + pular);
+            }
+        } while (nomeProduto == "");
+        produto[cont] = nomeProduto;
+        cont++;
+
+    }
+
+    // função / Método Exibir
+    void Exibir(String ordem) {
+        
+        if (ordem.equals("D")) {
+            for (int i = cont-1; i >= 0; i--) {              
+                if (produto[i] != "") {
+                    JOptionPane.showMessageDialog(null, "Produto (" + i + "): " + produto[i] + pular);
+                }
+            }
+        } else {
+            for (int i = 0; i < cont; i++) {
+                System.out.println("cont: "+cont);
+                if (produto[i] != "") {
+                    JOptionPane.showMessageDialog(null, "Produto (" + i + "): " + produto[i] + pular);
+                }
+            }
+        }
+    }
+
+    //função atualizar
+    void Atualizar() {
+
+        int indice;
+        String descricao;
+
+        do {
+            indice = Integer.parseInt(JOptionPane.showInputDialog(pular + "Informe o indice desejado: "));
+        } while (indice >= cont);
+        do {
+            descricao = JOptionPane.showInputDialog(null, "Informe a nova descrição: ");
+        } while (descricao == "");
+
+        //--atualizar o valor no vetor
+        produto[indice] = descricao;
+    }
+
+    //funcao Excluir
+    void Excluir() {
+        int indice = 0;
+        do {
+            indice = Integer.parseInt(JOptionPane.showInputDialog(pular + "Informe o indice a ser excluido: "));
+        } while (indice >= cont);
+        produto[indice] = "";
+    }
+
+    //funcao ImprimirOrdem
+    void ImprimirOrdem() {
+
+        String ordem = "";
+        //- C = crescente
+        //- D = decrecente
+
+        ordem = JOptionPane.showInputDialog(pular + "Informa a ordem (D) Decrecente ou (C) Crescente: ");
+        Exibir(ordem);
+
+    }
+
+    // funcao inicio()
+    public void inicio(){
+   
+        //--Estrutura de repetição principal
+        do {
+            //--Chama função para imprimir
+            acao = ImprimeMenu(); //--Ler a ação
+
+            switch (acao) {
+                case 1:
+                    Inserir();
+                    break;
+                case 2:
+                    Atualizar();
+                    break;
+                case 3:
+                    Excluir();
+                    break;
+                case 4:
+                    Exibir("");
+                    break; 
+                    case 5:
+				 	ImprimirOrdem();
+                    break; 
+                    case 9:
+				 	JOptionPane.showMessageDialog(null, pular + "programa encerrado!");
+                    break;	 			 	
+            }
+
+        }  while(acao != 9);		
+    
+    
+    }
+
+    //inicio do programa
+    public static void main(String[] args) {
+        
+        Cadastro cd = new Cadastro();
+        cd.inicio();
+        
+
+    }
+}
