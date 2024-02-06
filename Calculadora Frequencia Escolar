@@ -1,0 +1,79 @@
+package javaapplication1;
+
+import javax.swing.JOptionPane;
+
+public class JavaApplication1 {
+    
+         //VARIAVEIS
+        public static float diasDePresenca = 0f;
+        public static int diasDeAula = 0;
+        public static int resposta = 0;
+        public static float presenca[] = new float [4];
+        public static float media = 0f;
+        public static String materias[] = new String [4];
+        public static int contador = 0;
+        public static String aprovacao = "";
+        public static String teste [] = new String [4];
+        
+        //CONSTANTES
+        public static String n = "\n";
+        public static String espaco = " - - - - - ";
+        
+    public static void main(String[] args) {
+        
+        menuPrincipal();
+    }
+    
+    public static void menuPrincipal() {
+        int decider = 0;
+        
+        do {
+            decider = Integer.parseInt(JOptionPane.showInputDialog(""));
+            switch (decider) {
+                case 1 -> escolherMaterias();
+                case 2 -> definirDuracao();
+                case 3 -> visualizarResultados();
+                case 4 -> escolherMaterias();
+                
+                default -> JOptionPane.showInputDialog("Escolha um numero valido");
+            }
+        } while (decider <= 0 && decider > 9);
+    }
+    
+    public static void escolherMaterias() {
+        
+        contador++;
+        
+        String materia = JOptionPane.showInputDialog("Insira o nome da matéria que deseja realizar o calculo:");
+        materias[contador] = materia;
+    }
+    
+    public static void  definirDuracao() {
+  
+        String dias = JOptionPane.showInputDialog("Quantos dias letivos da matéria terão nesse semestre?");
+        diasDeAula = Integer.parseInt(dias);   
+        
+    }
+    public static void  definirPresenca() {
+
+        String diasPresente = JOptionPane.showInputDialog("Você esteve presente em quantos dias nesse semestre?");
+        diasDePresenca = Integer.parseInt(diasPresente);
+        media = (diasDePresenca * 4) / (diasDeAula * 4)* 100;
+        presenca[contador] = media;
+    }
+    public static void visualizarResultados() {
+        
+         JOptionPane.showMessageDialog(null, espaco + " PROSSIGA PARA OBTER OS RESULTADOS NO CONSOLE" + espaco);
+        
+        for (int i = 1; i <= contador; i++) {
+            if (presenca[i] < 75){
+                aprovacao = "REPROVADO";                
+            } else {
+                aprovacao = "APROVADO";
+            }
+            
+            teste[i] = aprovacao;
+            System.out.println("Matéria: " + materias[i] + " - - - Presença: " + presenca[i] +"%" + espaco + "Resultado: " + teste[i]);
+       }
+    }
+}
