@@ -2,7 +2,6 @@ package javaapplication1;
 
 import javax.swing.JOptionPane;
 import java.lang.Math;
-import java.text.DecimalFormat;
 
 public class JavaApplication2 {
 
@@ -19,22 +18,22 @@ public class JavaApplication2 {
     static int contadorUniversal = 1;
     static int resposta = 0;
     static String topo = "_____________________________\n";
-    
+
     public static void main(String[] args) {
 
         int escolha;
 
         do {
-            String Escolha = JOptionPane.showInputDialog(n + topo + n + "Selecione um numero:" + n + "1 - Registrar compras" + n + "2 - Comparar valor atual"
-                    + n + "3 - Ver inventario" + n + "4 - Porcentagem de rendimento" + n + "6 - Renda total" + n + "9 - Encerrar" + n + topo + n);
+            String Escolha = JOptionPane.showInputDialog(topo + "Selecione um numero:" + n + "1 - Registrar compras" + n + "2 - Comparar valor atual"
+                    + n + "3 - Ver inventario" + n + "5 - Porcentagem de rendimento" + n + "6 - Renda total" + n + "9 - Encerrar" + n + topo);
             escolha = Integer.parseInt(Escolha);
             switch (escolha) {
                 case 1 ->
-                    RegistrarSticker();
+                    RegistroSticker();
                 case 2 ->
-                    AvaliarSticker();
+                    AvaliacaoSticker();
                 case 3 ->
-                    MostrarInventario();
+                    Inventario();
                 case 9 ->    
                     Encerrar();
 
@@ -44,7 +43,7 @@ public class JavaApplication2 {
         } while (resposta == 0);
     }
 
-    public static void AvaliarSticker() {
+    public static void AvaliacaoSticker() {
 
         float valor = 0f;
         int quantidade = 0;
@@ -53,29 +52,21 @@ public class JavaApplication2 {
         int escolha = 0;
         int sticker = 0;
         int contador = 0;
-        
-        DecimalFormat df = new DecimalFormat();
-        df.applyPattern("##.00;");
 
-        JOptionPane.showMessageDialog(null, "Para realizar a analise de valor, escolha o sticker a partir do console : ");
-        MostrarInventario();
-        do {
+        JOptionPane.showMessageDialog(null, "Para realizar a analuise de valor, escolha o sticker a partir do console : ");
+        Inventario();
         String Sticker = JOptionPane.showInputDialog("Escolha o sticker pelo console: ");
         sticker = Integer.parseInt(Sticker);
-        if (sticker > contadorUniversal){
-            JOptionPane.showInputDialog("Sticker invalido. selecione outro! ");
-        }
-        } while (((sticker) + 1 > (contadorUniversal)) || (sticker < 0));  
         String Valor = JOptionPane.showInputDialog("Informe o valor atual de mercado" + n + " (Referente a steam): ");
         valor = Float.parseFloat(Valor);
         String Quantidade = JOptionPane.showInputDialog("Informe quantidade existente no seu inventario: ");
         quantidade = Integer.parseInt(Quantidade);
 
-        JOptionPane.showMessageDialog(null, stickerInformativo[sticker] + n + "- - - - - - - - - - -" + aest + "Valor total de venda: R$ " + (valor * quantidade) +
-                aest + "Rendimento de R$" + (df.format((valor * quantidade) - stickerTotal[sticker])) + " totais" + aest + "Porcentagem de rendimento total: " + (df.format((valor * quantidade) /(stickerTotal[sticker]) * 100)) + "%");
+        JOptionPane.showMessageDialog(null, stickerInformativo[sticker] + n + aest + "Rendimento de R$" + ((valor * quantidade) - stickerTotal[sticker]) + " totais");
+
     }
 
-    public static void RegistrarSticker() {
+    public static void RegistroSticker() {
 
         float valor = 0f;
         int quantidade = 0;
@@ -84,9 +75,6 @@ public class JavaApplication2 {
         int escolha = 0;
         int contador = 0;
         String classificacao = "";
-        
-        DecimalFormat df = new DecimalFormat();
-        df.applyPattern("##.00;");
 
             String Nome = JOptionPane.showInputDialog("Informe o nome do sticker: ");
         do {
@@ -121,13 +109,12 @@ public class JavaApplication2 {
         stickerQuantidade[contadorUniversal] = quantidade;
         stickerTotal[contadorUniversal] = (quantidade * valor);
         stickerInformativo[contadorUniversal] = ("Sticker: " + Nome + aest + "Raridade: " + classificacao + aest
-                + "Valor pago: R$ " + df.format(stickerValor[contadorUniversal]) + aest + "Quantidade comprada: " + df.format(stickerQuantidade[contadorUniversal]) + "x" + aest 
-                + "Valor total de compra: R$ " + df.format(stickerTotal[contadorUniversal]));
-        
+                + "Valor pago: R$ " + Valor + aest + "Quantidade comprada: " + quantidade + "x" + aest + "Valor total: R$ " + stickerTotal[contadorUniversal]);
+
         contadorUniversal += 1;
     }
 
-    public static void MostrarInventario() {
+    public static void Inventario() {
         int contador = 0;
         int numero = 1;
 
