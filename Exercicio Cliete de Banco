@@ -1,0 +1,152 @@
+package exercicio2;
+
+import java.text.DecimalFormat;
+import javax.swing.JOptionPane;
+import java.lang.String;
+
+public class Exercicio2 {
+
+    static String n = "\n";
+    static int quantidadeDepositos = 0;
+    static int quantidadeSaques = 0;
+    static int acoes = 0, escolha = 0;
+    static String extrato[] = new String[999];
+    static String Nome = "";
+    static String Conta = "";
+    static String classificacao = "", classificacaoCliente = "Cliente";
+    static float saldo = 0f, valorDisponivelParaSaque = 0, taxa = 1.05f, decontoTaxa = 0.95f, valorTaxa = 0.05f;
+    
+    public static void main(String[] args) {
+        
+        int ValidarConta = 0;
+        
+        do { 
+               Conta = JOptionPane.showInputDialog("Informe o numero da conta: ");
+                ValidarConta = Conta. length();
+                if ((ValidarConta > 9) || (ValidarConta <= 8)) {
+                    JOptionPane.showMessageDialog(null, "Numero de conta invalido, insira um codigo de apenas numeros, que contenha nove digitos!");
+                }  
+                
+           } while ((ValidarConta > 9) || (ValidarConta <= 8));   
+           
+           Nome = JOptionPane.showInputDialog("Informe o nome do gestor da conta: ");
+           
+           if (Nome.equals("Henrique Schulenburg")) {
+               classificacaoCliente += " Especial";
+               taxa = 1.01f;
+               decontoTaxa = 0.99f;
+               valorTaxa = 0.01f;
+           } 
+           
+        escolhaMenu();
+    }
+    
+    public static void escolhaMenu() {
+
+        DecimalFormat df = new DecimalFormat();
+        df.applyPattern("##.00;");
+  
+        do {
+            String Escolha = JOptionPane.showInputDialog("Informe como podemos ajuda-lo(a) hoje, sr(a) " + Nome + n + "1 - Depositar"+ n + "2 - Sacar"+ n + "3 - Ver extrato" + n + "4 - Exibir Saldo" + n + "5 - Finalizar sessao");
+            escolha = Integer.parseInt(Escolha);
+            if (escolha == 1) {
+                classificacao = "Deposito";
+                depositar();
+            } else if (escolha == 2) {
+                classificacao = "Saque";
+                sacar();
+            } else if (escolha == 3) {
+                mostrarExtrato();
+            } else if (escolha == 4){
+                mostrarSaldo();
+            } else if (escolha == 5){
+                encerrar();
+            } else {   
+                classificacao = "Erro, repita o processo";
+            }
+        } while ((escolha > 5) || (escolha <= 0));
+    }
+    
+    public static void depositar() {
+        
+        DecimalFormat df = new DecimalFormat();
+        df.applyPattern("##.00;");
+        
+        float valor = 0f;
+        
+        String Valor = JOptionPane.showInputDialog("Informe o valor de deposito: ");
+        valor = Float.parseFloat(Valor);
+        saldo += valor;
+        acoes += 1;
+
+        extrato[acoes] = (n + "Extrato:" + n + "Numero da conta: " + Conta + n + "Nome: " + Nome + " - - " + classificacaoCliente + n
+                + "Tipo de transacao: " + classificacao + " - - " + "Valor depositado: R$ " + df.format(valor) + n + 
+                "Saldo: R$" + df.format(saldo));
+
+        System.out.println(extrato[acoes]);
+        quantidadeDepositos += 1;
+        
+        escolhaMenu();
+    }
+    
+    public static void sacar() {
+        
+        float saque = 0f;
+        float valor = 0f;
+        
+        DecimalFormat df = new DecimalFormat();
+        df.applyPattern("##.00;");
+
+        do {
+        String Valor = JOptionPane.showInputDialog("Informe o valor que deseja sacar:" + n + "Valor sera recebido com taxa aplicada");
+        valor = Float.parseFloat(Valor);
+        saque = (valor * taxa);
+        valorDisponivelParaSaque = (saldo * decontoTaxa);
+        
+            if ((saque > valorDisponivelParaSaque) || (saque <= 0)) {
+                JOptionPane.showMessageDialog(null, "Informe um valor valido, lembre da taxa que é cobrada pelo seu plano " + n +
+                        "Saldo atual: R$ " + saldo + n + "Valor disponivel para saque: R$ " + valorDisponivelParaSaque);
+            }
+        } while ((saque > valorDisponivelParaSaque) || (saque <= 0));
+        
+        valorTaxa *= saque;
+        saldo -= saque;
+        
+        
+        acoes += 1;
+
+        extrato[acoes] = (n + "Extrato:" + n + "Numero da conta: " + Conta + n +  "Nome: " + Nome + " - - " + classificacaoCliente + n
+                + "Tipo de transacao: " + classificacao + " - - " + "Valor sacado: R$ " + df.format(valor) + n + "Valor cobrado: R$ " + 
+                df.format(saque) + n + "Saldo: R$" + df.format(saldo));
+
+        System.out.println(extrato[acoes]);
+        quantidadeSaques += 1;
+        
+        escolhaMenu();
+    }
+    
+    public static void mostrarExtrato() {
+        
+        for (int j = 1; j <= acoes; j++) {
+                System.out.println(extrato[j] );
+        }        
+        
+        escolhaMenu();
+    }
+    
+    public static void mostrarSaldo() {
+        
+        DecimalFormat df = new DecimalFormat();
+        df.applyPattern("##.00;");
+        
+        System.out.println("Saldo atual da conta: R$ " + df.format(saldo));  
+        escolhaMenu();
+    }
+    
+    public static void encerrar() {
+        
+        JOptionPane.showMessageDialog(null, " - PROGRAMA FINALIZADO - ");
+        escolha = 1;
+        System.exit(escolha);
+    }
+}
