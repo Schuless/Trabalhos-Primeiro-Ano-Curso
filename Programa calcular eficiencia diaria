@@ -1,0 +1,87 @@
+package resolucaodeproblemas;
+
+import javax.swing.*;  
+import java.awt.event.*;
+
+public class TesteListas extends JFrame implements ActionListener{  
+    JLabel l;  
+    JCheckBox cb1,cb2,cb3, cb4, cb5, cb6; 
+    JButton b;
+    
+    TesteListas(){  
+        l=new JLabel("Lista de tarefas ~ ~ ~ ~ ~ ~");  
+        l.setBounds(100,50,300,20);  
+        cb1=new JCheckBox("Organizar o Quarto");  
+        cb1.setBounds(100,100,150,20);  
+        cb2=new JCheckBox("Praticar programação");  
+        cb2.setBounds(100,150,300,20);  
+        cb3=new JCheckBox("Lavar a louça");  
+        cb3.setBounds(100,200,150,20);
+        cb4=new JCheckBox("Limpar a Casa");  
+        cb4.setBounds(100,250,150,20);
+        cb5=new JCheckBox("Comer frutas");  
+        cb5.setBounds(100,300,150,20);
+        cb6=new JCheckBox("Organizar lista do mercado");  
+        cb6.setBounds(100,350,500,20); 
+        b=new JButton("Pontuar");  
+        b.setBounds(100,600,80,30);  
+        b.addActionListener(this);  
+        add(l);add(cb1);add(cb2);add(cb3);add(cb4);add(cb5);add(cb6);add(b);  
+        setSize(400,700);  
+        setLayout(null);  
+        setVisible(true);  
+        setDefaultCloseOperation(EXIT_ON_CLOSE);  
+    }  
+    public void actionPerformed(ActionEvent e){  
+        float contador = 0;
+        String texto = "";
+        float produtividade = 0f;
+        int atividades = 6;
+        if(cb1.isSelected()){  
+            contador += 1;  
+            texto += "Organizar o Quarto + 1\n";  
+        } else {
+            texto += "Organizar o Quarto 0 {ALERTA}\n";  
+        }
+        if(cb2.isSelected()){  
+            contador += 1;  
+            texto += "Praticar programação + 1\n";  
+        } else {
+            texto += "Praticar programação 0 {ALERTA}\n";  
+        } 
+        if(cb3.isSelected()){  
+            contador += 1;  
+            texto += "Lavar a louça + 1 \n";  
+        } else {
+            texto += "Lavar a louça 0{ALERTA}\n";  
+        }
+        if(cb4.isSelected()){  
+            contador += 1;  
+            texto += "Limpar a Casa + 1 \n";  
+        } else {
+            texto += "Limpar a Casa 0 {ALERTA}\n";  
+        }
+        if(cb5.isSelected()){  
+            contador += 1;  
+            texto += "Comer frutas + 1 \n";  
+        } else {
+            texto += "Comer frutas 0 {ALERTA}\n";  
+        }
+        if(cb6.isSelected()){  
+            contador += 1;  
+            texto += "Organizar lista do mercado + 1 \n";  
+        } else {
+            texto += "Organizar lista do mercado 0 {ALERTA}\n";  
+        }
+        
+        produtividade = contador * 100 / atividades;
+        
+        texto += "-----------------\n";  
+        JOptionPane.showMessageDialog(this,texto + "Pontuação Diária: " + contador + "\nProdutividade: " + produtividade + "%");
+        
+        
+    }  
+    public static void main(String[] args) {  
+        new TesteListas();  
+    }  
+}  
