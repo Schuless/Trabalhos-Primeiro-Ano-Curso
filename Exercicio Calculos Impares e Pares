@@ -1,0 +1,112 @@
+package exercicios;
+
+import java.text.DecimalFormat;
+import javax.swing.JOptionPane;
+
+public class Exercicios {
+    
+    static int numeros[] = new int[999];
+    static  int quantidadeVetores = 0; 
+    static String n = "\n";
+    static int contador = 0;
+    static String impar = "Números impar: ";
+    static String par = "";
+    static int numerosImpar[] = new int[999];
+    static int numerosPar[] = new int [999];
+    
+    public static void main(String[] args) {
+        cadastrarVetor();
+        listarVetor();
+        listarImpares();
+        listarPares();
+        listarParesEmImpares();
+        listarImparesEmPares();
+
+    }
+     
+    public static void cadastrarVetor() {     
+        
+        int numero = 0;
+            
+        quantidadeVetores = Integer.parseInt(JOptionPane.showInputDialog("Digite quantos vetores deseja informar? "));
+        
+        for (int i = 0; i < quantidadeVetores; i++) {
+            contador +=1 ;
+            numero = Integer.parseInt(JOptionPane.showInputDialog("Informe um numero para o vetor: " + n + "{ " + contador + " }"));
+            numeros[i] = numero;
+        }
+    }
+    public static void listarVetor() {     
+        
+        for (int i = 0; i < quantidadeVetores; i++) {
+            JOptionPane.showMessageDialog(null,"Vetor de numero {" + i + "}"+ n + "{ " + numeros[i] + "}");
+        }
+    }
+     
+    public static void listarImpares() {     
+        
+        int impar = 0;
+        
+        JOptionPane.showMessageDialog(null, "Analise no console os numeros impares");
+        System.out.println("Impar : ");
+        
+        for (int i = 0; i < quantidadeVetores; i++) {
+            if (numeros[i] % 2 != 0) {
+                impar = numeros[i];
+                numerosImpar[i] = impar;
+                System.out.println("- "+ impar);
+            }       
+        }    
+    }
+    
+    public static void listarPares() {     
+        
+        int par = 0;
+        
+        JOptionPane.showMessageDialog(null, "Analise no console os numeros pares");
+        System.out.println("Par : ");
+        
+        for (int i = 0; i < quantidadeVetores; i++) {
+            if (numeros[i] % 2 == 0) {
+                par = numeros[i];
+                numerosPar[i] = par;
+                System.out.println("- "+ par);
+            } 
+        }    
+    } 
+    
+    public static void listarParesEmImpares() {     
+        
+        int contadorPar = 0;
+        
+        JOptionPane.showMessageDialog(null, "Analise no console os numeros pares que estao em vetores impares");
+        System.out.println("Pares em vetores impares: ");
+        
+        for (int i = 0; i < quantidadeVetores; i++) {
+            if (numeros[i] % 2 == 0) {
+                if (i % 2 != 0) {
+                    contadorPar += 1;
+                    
+                }        
+            }
+        }
+        System.out.println("Existem " + contadorPar + " par(es)em casas impares");
+    }
+    public static void listarImparesEmPares() {     
+        
+        int contadorImpar = 0;
+        
+        JOptionPane.showMessageDialog(null, "Analise no console os numeros impares que estao em vetores pares");
+        System.out.println("Impares em vetores pares: ");
+        
+        for (int i = 0; i < quantidadeVetores; i++) {
+            if (numeros[i] % 2 != 0) {
+                if (i % 2 == 0) {
+                    contadorImpar += 1;
+                    
+                }
+            }
+        }
+        System.out.println("Existem " + contadorImpar + " impar(es)em casas pares"); 
+    }  
+}     
