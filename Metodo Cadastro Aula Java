@@ -1,0 +1,32 @@
+package cadastro;
+
+import javax.swing.JOptionPane;
+
+public class MetodosCadastro {
+
+    String[] produtos = new String[9999];
+    int qtdcadastro;
+    int cont = 0, op, acao;
+
+    public void cadastroProduto() {
+        qtdcadastro = Integer.parseInt(JOptionPane.showInputDialog("Informe a quantidade de produtos deseja cadastrar: "));
+
+        for (int i = 0; i < qtdcadastro; i++) {
+
+            produtos[cont] = JOptionPane.showInputDialog("Nome do produto " + (i + 1) + " : ");
+            cont++;
+        }
+        JOptionPane.showMessageDialog(null, "Produtos cadastrados com sucesso");
+    }
+
+    String listProdutos = "";
+
+    public void listarProdutos() {
+        for (int i = 0; i < produtos.length; i++) {
+            if (produtos[i] != null) {
+                listProdutos += produtos[i] + "\n";
+            }
+        }
+        JOptionPane.showMessageDialog(null, listProdutos);
+    }
+}
